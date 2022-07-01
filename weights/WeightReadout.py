@@ -73,14 +73,16 @@ for name in readoutnames:
         #                     print conn
         # don't need to pass offset as arg, now we store the parent projection
         src, tgt, value = conn
+        src = int(src)
+        tgt = int(tgt)
         if np.isnan(value_arr[src, tgt]):
             value_arr[src, tgt] = value
         else:
             value_arr[src, tgt] += value
     if (name == 'YeAe' + ending):
         values = np.asarray(value_arr)  # .transpose()
-    for i in range(n_e):
-        print(values[i, i])
+        for i in range(n_e):
+            print(values[i, i])
     else:
         values = np.asarray(value_arr)
 
@@ -163,21 +165,22 @@ savefig(str(fi.number))
 # # plot the surface
 # plt3d = plt.figure().gca(projection='3d')
 # plt3d.plot_surface(xx, yy, z)
+try:
+    XA_sum = np.nansum(XA_values[0:n_input, 0:n_e], axis=0)/n_e
+    AA_sum = np.nansum(AA_values[0:n_e, 0:n_e], axis=0)/n_e
 
-XA_sum = np.nansum(XA_values[0:n_input, 0:n_e], axis=0)/n_e
-AA_sum = np.nansum(AA_values[0:n_e, 0:n_e], axis=0)/n_e
-
-fi = figure()
-plot(XA_sum, AA_sum, 'w.')
-for label, x, y in zip(range(200), XA_sum, AA_sum):
-    plt.annotate(label,
-                 xy=(x, y), xytext=(-0, 0),
-                 textcoords='offset points', ha='right', va='bottom',
-                 color='k')
-xlabel('summed input from X to A for A neurons')
-ylabel('summed input from A to A for A neurons')
-savefig(str(fi.number))
-
+    fi = figure()
+    plot(XA_sum, AA_sum, 'w.')
+    for label, x, y in zip(range(200), XA_sum, AA_sum):
+        plt.annotate(label,
+                     xy=(x, y), xytext=(-0, 0),
+                     textcoords='offset points', ha='right', va='bottom',
+                     color='k')
+    xlabel('summed input from X to A for A neurons')
+    ylabel('summed input from A to A for A neurons')
+    savefig(str(fi.number))
+except:
+    pass
 
 print('done')
 

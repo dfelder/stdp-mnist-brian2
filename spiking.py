@@ -115,7 +115,7 @@ test_mode = True
 np.random.seed(0)
 data_path = './'
 if test_mode:
-    num_examples = 10000
+    num_examples = 1000
 else:
     num_examples = 60000 * 3
 
