@@ -62,7 +62,7 @@ n_input = 784
 n_e = 400
 
 for name in readoutnames:
-    readout = np.load(name + '.npy')
+    readout = np.load(f'weights/{name}.npy')
     if (name == 'XeAe' + ending):
         value_arr = np.nan * np.ones((n_input, n_e))
     else:
@@ -112,7 +112,6 @@ for name in readoutnames:
     xlabel('Target excitatory neuron number')
     ylabel('Source excitatory neuron number')
     title(name)
-    savefig(str(fi.number))
 
     if name == 'XeAe' + ending:
         XA_values = np.copy(values)  # .transpose()
@@ -144,7 +143,6 @@ for name in readoutnames:
 # for i in nEH:
 
 im, fi = plot_2d_input_weights()
-savefig(str(fi.number))
 #
 #
 # from mpl_toolkits.mplot3d import Axes3D
@@ -178,7 +176,6 @@ try:
                      color='k')
     xlabel('summed input from X to A for A neurons')
     ylabel('summed input from A to A for A neurons')
-    savefig(str(fi.number))
 except:
     pass
 
